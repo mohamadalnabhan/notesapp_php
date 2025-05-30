@@ -15,7 +15,8 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("login Page"),
+        title: Text("login Page",style: TextStyle(color: Colors.white),),
+        
         backgroundColor: Colors.deepPurple,
       ),
       body: Form(
