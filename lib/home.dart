@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:php_app/main.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,9 +13,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: const Text('Home Screen'),  // Fixed: Using Text instead of Home()
         backgroundColor: Colors.deepPurple,
-        
+        actions: [IconButton(onPressed: (){
+              sharedPreferences.clear();
+               Navigator.of(context).pushNamedAndRemoveUntil("login", (route) => false);
+
+        }, icon: Icon(Icons.exit_to_app))],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
