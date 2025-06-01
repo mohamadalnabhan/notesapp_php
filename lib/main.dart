@@ -3,6 +3,8 @@ import 'package:php_app/auth/login.dart';
 import 'package:php_app/auth/signup.dart';
 import 'package:php_app/auth/success_signup.dart';
 import 'package:php_app/home.dart';
+import 'package:php_app/notespages/addnote.dart';
+import 'package:php_app/notespages/updatenote.dart';
 import "package:shared_preferences/shared_preferences.dart" ;
 
 
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         "signup" :(context)=>(Signup()),
         "home" : (context) => (Home()),
         "success" : (context) => (SuccessSignup()),
+         "addnote" : (context) => (Addnote()),
+          "updatenote" : (context) => (Updatenote()),
       },
       
    );
