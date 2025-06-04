@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:php_app/constant/links.dart';
 import 'package:php_app/constant/crud.dart';
 
 import 'package:php_app/customWidgets/custom_card.dart';
 import 'package:php_app/main.dart';
+import 'package:php_app/model/note_model.dart';
+import 'package:php_app/notespages/updatenote.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -48,7 +52,7 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.of(context).pushNamed("addnote");
         },
-        child: Icon(Icons.add,color: Colors.white,),
+        child: Icon(Icons.add, color: Colors.white),
       ),
       body: SafeArea(
         child: Container(
@@ -77,13 +81,31 @@ class _HomeState extends State<Home> {
                         physics:
                             const NeverScrollableScrollPhysics(), // prevents scroll conflict
                         itemBuilder: (context, index) {
-                          var note = notes[index];
+                          var note = snapshot.data['data'][index];
                           return CustomCard(
-                            ontap: () {},
-                            title: note['note_title'] ?? '',
-                            content: note['note_content'] ?? '',
+                            onDelete: () async {
+                              var response = await crud.PostRequest(
+                                LinkDeleteNotes,
+                                {"id": note['note_id'].toString() ,
+                                "imageName" :note['note_image'].toString()}
+                              );
+                              if (response['status'] == "success") {
+                                Navigator.of(
+                                  context,
+                                ).pushReplacementNamed("home");
+                              } else {
+                                print("failed");
+                              }
+                            },
+                            ontap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Updatenote(notes: note),
+                                ),
+                              );
+                            },
+                            noteModel: NoteModel.fromJson(note),
                           );
-                          
                         },
                       );
                     } else {

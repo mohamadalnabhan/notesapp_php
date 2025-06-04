@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:php_app/constant/links.dart';
+import 'package:php_app/model/note_model.dart';
 
 class CustomCard extends StatelessWidget {
   final void Function()? ontap;
-  final String title;
-  final String content;
 
+  final NoteModel noteModel ;
+  final void Function()? onDelete;
   const CustomCard({
     super.key,
     required this.ontap,
-    required this.title,
-    required this.content,
+    
+    required this.onDelete,  required this.noteModel,
   });
 
   @override
@@ -19,8 +21,8 @@ class CustomCard extends StatelessWidget {
       child: Card(
         child: Row(
           children: [
-            Image.asset(
-              "assets/images/notepic.PNG",
+            Image.network(
+              "$ImgRoute/${noteModel.noteImage}",
               width: 100,
               height: 100,
               fit: BoxFit.cover,
@@ -35,8 +37,12 @@ class CustomCard extends StatelessWidget {
             ),
             Expanded(
               child: ListTile(
-                title: Text(title),
-                subtitle: Text(content),
+                title: Text("${noteModel.noteTitle}"),
+                subtitle: Text("${noteModel.noteContent}"),
+                trailing: IconButton(
+                  onPressed: onDelete,
+                  icon: Icon(Icons.delete, color: Colors.red),
+                ),
               ),
             ),
           ],
